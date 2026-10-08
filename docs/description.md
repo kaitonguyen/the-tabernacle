@@ -1,8 +1,8 @@
-Below is a detailed English description of the Tabernacle and its furnishings, based mainly on **Exodus 25–30**. Measurements are given in biblical **cubits** (1 cubit ≈ 18 inches / 45 cm).
+Below is a detailed English description of the Tabernacle and its furnishings, based mainly on **Xuất Ê-díp-tô Ký 25–30**. Measurements are given in biblical **cubits** (1 cubit ≈ 18 inches / 45 cm).
 
 ---
 
-## The Tabernacle (Exodus 25–27; 30; 35–40)
+## The Tabernacle (Xuất Ê-díp-tô Ký 25–27; 30; 35–40)
 
 The Tabernacle was a portable sanctuary—a “Tent of Meeting”—where God dwelt among the Israelites during their wilderness journey. It was built according to the pattern shown to Moses on Mount Sinai. Its materials included gold, silver, bronze, blue, purple, and scarlet yarn, fine twisted linen, goats’ hair, ram skins dyed red, durable leather, acacia wood, oil, spices, and precious stones.
 
@@ -13,7 +13,7 @@ The Tabernacle was divided into:
 
 ---
 
-## 1. The Ark of the Covenant (Exodus 25:10–16)
+## 1. The Ark of the Covenant (Xuất Ê-díp-tô Ký 25:10–16)
 
 - Made of **acacia wood**.
 - Dimensions: **2.5 cubits long, 1.5 cubits wide, 1.5 cubits high**.
@@ -25,7 +25,7 @@ The Tabernacle was divided into:
 
 ---
 
-## 2. The Mercy Seat (Exodus 25:17–22)
+## 2. The Mercy Seat (Xuất Ê-díp-tô Ký 25:17–22)
 
 - Made of **pure gold**.
 - Dimensions: **2.5 cubits long and 1.5 cubits wide**—matching the Ark.
@@ -35,7 +35,7 @@ The Tabernacle was divided into:
 
 ---
 
-## 3. The Table of Showbread (Exodus 25:23–30)
+## 3. The Table of Showbread (Xuất Ê-díp-tô Ký 25:23–30)
 
 - Made of **acacia wood**.
 - Dimensions: **2 cubits long, 1 cubit wide, 1.5 cubits high**.
@@ -47,7 +47,7 @@ The Tabernacle was divided into:
 
 ---
 
-## 4. The Golden Lampstand (Exodus 25:31–40)
+## 4. The Golden Lampstand (Xuất Ê-díp-tô Ký 25:31–40)
 
 - Made of **pure gold**, hammered work.
 - A central shaft with **six branches** extending from its sides—three on one side and three on the other.
@@ -60,7 +60,7 @@ The Tabernacle was divided into:
 
 ---
 
-## 5. The Tabernacle Structure (Exodus 26)
+## 5. The Tabernacle Structure (Xuất Ê-díp-tô Ký 26)
 
 ### Curtains
 - **Ten curtains** of fine twisted linen, with **blue, purple, and scarlet yarn**, woven with **cherubim**.
@@ -97,7 +97,7 @@ The Tabernacle was divided into:
 
 ---
 
-## 6. The Bronze Altar of Burnt Offering (Exodus 27:1–8)
+## 6. The Bronze Altar of Burnt Offering (Xuất Ê-díp-tô Ký 27:1–8)
 
 - Made of **acacia wood**.
 - Dimensions: **5 cubits long, 5 cubits wide, 3 cubits high**—a square altar.
@@ -111,7 +111,7 @@ The Tabernacle was divided into:
 
 ---
 
-## 7. The Outer Court (Exodus 27:9–19)
+## 7. The Outer Court (Xuất Ê-díp-tô Ký 27:9–19)
 
 - The courtyard was **100 cubits long and 50 cubits wide**.
 - Hangings of **fine twisted linen**, **5 cubits high**.
@@ -125,7 +125,7 @@ The Tabernacle was divided into:
 
 ---
 
-## 8. The Priestly Garments (Exodus 28)
+## 8. The Priestly Garments (Xuất Ê-díp-tô Ký 28)
 
 ### For Aaron the High Priest
 - **Ephod**: made of gold, blue, purple, and scarlet yarn, and fine twisted linen. It had two shoulder pieces with **two onyx stones**, engraved with the names of the sons of Israel—six names on each stone.
@@ -149,7 +149,7 @@ The Tabernacle was divided into:
 
 ---
 
-## 9. The Consecration of the Priests (Exodus 29)
+## 9. The Consecration of the Priests (Xuất Ê-díp-tô Ký 29)
 
 - Aaron and his sons were brought to the entrance of the Tent of Meeting and **washed with water**.
 - They were **clothed** in the holy garments.
@@ -166,7 +166,7 @@ The Tabernacle was divided into:
 
 ---
 
-## 10. The Altar of Incense (Exodus 30:1–10)
+## 10. The Altar of Incense (Xuất Ê-díp-tô Ký 30:1–10)
 
 - Made of **acacia wood**.
 - Dimensions: **1 cubit long, 1 cubit wide, 2 cubits high**.
@@ -181,7 +181,7 @@ The Tabernacle was divided into:
 
 ---
 
-## 11. The Bronze Basin (Exodus 30:17–21)
+## 11. The Bronze Basin (Xuất Ê-díp-tô Ký 30:17–21)
 
 - Made of **bronze**.
 - Its base was also of **bronze**.
@@ -191,7 +191,7 @@ The Tabernacle was divided into:
 
 ---
 
-## 12. The Holy Anointing Oil (Exodus 30:22–33)
+## 12. The Holy Anointing Oil (Xuất Ê-díp-tô Ký 30:22–33)
 
 - Made of:
   - **500 shekels of liquid myrrh**
@@ -205,7 +205,7 @@ The Tabernacle was divided into:
 
 ---
 
-## 13. The Holy Incense (Exodus 30:34–38)
+## 13. The Holy Incense (Xuất Ê-díp-tô Ký 30:34–38)
 
 - Made of equal parts of:
   - **Stacte**

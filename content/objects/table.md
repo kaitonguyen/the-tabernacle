@@ -1,9 +1,8 @@
 ---
 id: table
-title: Table of Showbread
-reference: Exodus 25:23-30
+title: Bàn bánh trần thiết
+reference: Xuất Ê-díp-tô Ký 25:23-30
 dimensions: 2 × 1 × 1½ cubits · 0.90 × 0.45 × 0.675 m
 ---
 
-The table was made of acacia wood overlaid with pure gold. Twelve loaves of showbread were arranged in two rows of six and replaced every Sabbath.
-
+Bàn được làm bằng gỗ si-tim, bọc vàng ròng. Mười hai ổ bánh trần thiết được sắp thành hai hàng, mỗi hàng sáu ổ, và được thay mới vào mỗi ngày Sa-bát.

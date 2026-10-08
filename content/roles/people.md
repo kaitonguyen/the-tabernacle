@@ -1,9 +1,9 @@
 ---
 id: people
-name: Israelite
-short: People
-access: Outer court
+name: Dân Y-sơ-ra-ên
+short: Dân sự
+access: Outer court (Hành lang)
 order: 1
 ---
 
-Approach through the eastern gate and witness the altar of burnt offering and the bronze basin.
+Bước qua cổng Đền Tạm ở phía Đông và chứng kiến bàn thờ dâng tế lễ thiêu cùng chậu rửa bằng đồng.

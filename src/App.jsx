@@ -377,11 +377,11 @@ function Player({ role, started, fact, onDenied, onLockChange, touchMode, touchI
     }
     if (atTentDepth && inTentX && role === 'people') {
       valid = false
-      notifyDenied('Only consecrated priests entered the Holy Place.')
+      notifyDenied('Chỉ những thầy tế lễ đã được biệt riêng ra thánh mới được phép vào Nơi Thánh.')
     }
     if (p.z < VEIL_Z + 0.1 && inTentX && role === 'priest') {
       valid = false
-      notifyDenied('Only the High Priest passed beyond the veil, once each year.')
+      notifyDenied('Chỉ thầy tế lễ thượng phẩm mới được phép đi qua bức màn để vào Nơi Chí Thánh, mỗi năm một lần.')
     }
     const collidesBox = (cx, cz, halfX, halfZ) => Math.abs(p.x - cx) < halfX + playerRadius && Math.abs(p.z - cz) < halfZ + playerRadius
     const collidesCircle = (cx, cz, radius) => Math.hypot(p.x - cx, p.z - cz) < radius + playerRadius
@@ -459,7 +459,7 @@ function Intro({ role, setRole, onStart }) {
             )
           })}
         </div>
-        <button id="enter-world" className="primary-button" onClick={onStart}>Enter as {ROLES[role].name}<ArrowRight size={18} weight="bold" /></button>
+        <button id="enter-world" className="primary-button" onClick={onStart}>Nhập vai {ROLES[role].name}<ArrowRight size={18} weight="bold" /></button>
       </div>
       <div className="intro__note"><BookOpenText size={18} /><span>{SITE.note}</span></div>
       <div className="intro__scale"><span>{SITE.scaleValue}</span><i></i><span>{SITE.scaleLabel}</span></div>
@@ -470,10 +470,10 @@ function Intro({ role, setRole, onStart }) {
 function MiniMap({ role }) {
   return (
     <div className="map" aria-label="Plan of the Tabernacle">
-      <div className="map__head"><MapTrifold size={16} /><span>Site plan</span><span>1:500</span></div>
+      <div className="map__head"><MapTrifold size={16} /><span>Mặt bằng</span><span>1:500</span></div>
       <div className="map__plan">
         <div className="map__court">
-          <span className="map__gate">EAST GATE</span>
+          <span className="map__gate">CỔNG PHÍA ĐÔNG</span>
           <span className="map__altar"></span>
           <span className="map__laver"></span>
           <div className="map__tent"><span className="map__veil"></span><span className="map__ark"></span></div>
@@ -546,13 +546,13 @@ function GameUI({ role, activeSpot, fact, denied, locked, touchMode, touchInput,
       {!touchMode && !locked && !fact && (
         <button className="resume" onClick={resume}>
           <MouseSimple size={22} />
-          <strong>Click to walk</strong>
-          <span>Mouse to look · WASD to move · Esc to pause</span>
+          <strong>Click chuột để di chuyển</strong>
+          <span>Điều khiển chuột để quan sát · WASD để di chuyển · Esc để dừng</span>
         </button>
       )}
-      {activeSpot && !fact && <button className={`interact ${touchMode ? 'is-touch' : ''}`} onClick={onInspect}><span className="key">{touchMode ? 'Tap' : 'E'}</span><span>Inspect {FACTS[activeSpot].title}</span></button>}
+      {activeSpot && !fact && <button className={`interact ${touchMode ? 'is-touch' : ''}`} onClick={onInspect}><span className="key">{touchMode ? 'Tap' : 'E'}</span><span>Kiểm tra {FACTS[activeSpot].title}</span></button>}
       {denied && <div className="denied"><Info size={18} weight="fill" /><span>{denied}</span></div>}
-      <div className="controls"><MouseSimple size={18} /><span>Look</span><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd><span>Move</span><kbd>Shift</kbd><span>Walk faster</span></div>
+      <div className="controls"><MouseSimple size={18} /><span>Quan sát</span><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd><span>Di chuyển</span><kbd>Shift</kbd><span>Di chuyển nhanh hơn</span></div>
       {touchMode && !fact && <TouchControls input={touchInput} />}
       {fact && (
         <aside className="fact-panel">
@@ -563,7 +563,7 @@ function GameUI({ role, activeSpot, fact, denied, locked, touchMode, touchInput,
           <strong>{fact.dimensions}</strong>
           <div className="fact-panel__rule"></div>
           <p className="fact-panel__body">{fact.body}</p>
-          <small>Gold markers identify objects with source notes. Exact positions are reconstructed where Scripture gives only relative placement.</small>
+          <small>Các ký hiệu màu vàng đánh dấu những vật dụng trong Đền Tạm, kèm theo câu Kinh Thánh tham khảo. Một số vị trí trên sơ đồ được phục dựng dựa trên mô tả trong Kinh Thánh, vì bản văn chỉ cho biết vị trí tương đối mà không nêu rõ khoảng cách chính xác.</small>
         </aside>
       )}
     </div>

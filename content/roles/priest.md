@@ -1,9 +1,9 @@
 ---
 id: priest
-name: Priest
-short: Priest
-access: Court + Holy Place
+name: Thầy tế lễ
+short: Thầy tế lễ
+access: Hành lang và Nơi Thánh
 order: 2
 ---
 
-Serve at the altar, wash at the basin, and enter the Holy Place.
+Dâng của tế lễ trên bàn thờ, rửa mình bằng chậu đồng và được bước vào Nơi Thánh

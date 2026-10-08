@@ -1,9 +1,9 @@
 ---
 id: highPriest
-name: High Priest
-short: High Priest
-access: All spaces
+name: Thầy tế lễ thượng phẩm
+short: Thầy tế lễ thượng phẩm
+access: Mọi khu vực
 order: 3
 ---
 
-Pass beyond the veil into the Most Holy Place where the Ark was kept.
+Được phép bước qua màn ngăn vào Nơi Chí Thánh, nơi đặt Hòm Giao Ước.

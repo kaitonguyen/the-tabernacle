@@ -1,9 +1,8 @@
 ---
 id: laver
-title: Bronze basin
-reference: Exodus 30:17-21
+title: Thùng rửa bằng đồng
+reference: Xuất Ê-díp-tô Ký 30:17-21
 dimensions: Dimensions not stated
 ---
 
-The basin and its base were made of bronze. It stood between the Tent of Meeting and the altar. Aaron and his sons washed their hands and feet here before entering the tent or approaching the altar.
-
+Thùng rửa và chân thùng đều được làm bằng đồng, đặt giữa Hội Mạc và bàn thờ. A-rôn cùng các con trai người rửa tay và chân tại đây trước khi vào Hội Mạc hoặc đến gần bàn thờ.

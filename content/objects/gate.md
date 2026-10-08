@@ -1,9 +1,8 @@
 ---
 id: gate
-title: Gate of the court
-reference: Exodus 27:13-16
-dimensions: 20 cubits wide · 9.00 m
+title: Cửa hành lang
+reference: Xuất Ê-díp-tô Ký 27:13-16
+dimensions: Dài 20 cubits · 9.00 m
 ---
 
-The eastern gate screen was made of blue, purple, and scarlet yarn and fine twisted linen. It was embroidered and hung on four pillars with four bronze bases.
-
+Bức màn che cửa hành lang phía đông được dệt bằng chỉ màu xanh, tím, đỏ điều và vải gai mịn. Màn được thêu khéo léo và treo trên bốn cây trụ có bốn lỗ trụ bằng đồng.

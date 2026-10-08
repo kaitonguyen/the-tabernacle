@@ -1,9 +1,8 @@
 ---
 id: incense
-title: Altar of incense
-reference: Exodus 30:1-10
+title: Bàn thờ xông hương
+reference: Xuất Ê-díp-tô Ký 30:1-10
 dimensions: 1 × 1 × 2 cubits · 0.45 × 0.45 × 0.90 m
 ---
 
-The small acacia altar was overlaid with pure gold and stood in the Holy Place before the veil. Aaron burned sweet incense on it every morning and evening.
-
+Bàn thờ nhỏ được làm bằng gỗ si-tim, bọc vàng ròng, đặt trong Nơi Thánh, phía trước bức màn. A-rôn xông hương trên bàn thờ mỗi buổi sáng và mỗi buổi chiều tối. Nghiêm cấm dùng hương lạ hoặc dâng của-lễ thiêu, của-lễ chay hay là lễ quán nào hết.
