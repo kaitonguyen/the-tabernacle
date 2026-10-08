@@ -185,7 +185,7 @@ function BronzeAltar() {
         </mesh>
       ))}
       {[-1.13, 1.13].flatMap((x) => [-0.85, 0.85].map((z) => (
-        <mesh key={`altar-ring-${x}-${z}`} position={[x, 0.55, z]} rotation={[0, Math.PI / 2, 0]}>
+        <mesh key={`altar-ring-${x}-${z}`} position={[x, 0.55, z]} rotation={[0, Math.PI, 0]}>
           <torusGeometry args={[0.09, 0.025, 8, 18]} />
           <meshStandardMaterial color={bronze} metalness={0.72} roughness={0.3} />
         </mesh>
@@ -236,7 +236,7 @@ function Table() {
   }, [])
 
   return (
-    <group position={[1.55, 0, -6.7]} rotation={[0, Math.PI / 2, 0]}>
+    <group position={[1.55, 0, -6.7]} rotation={[0, Math.PI, 0]}>
       {/* 4 Golden Legs with Tapered Feet and Upper Capitals */}
       {[
         [-0.17, 0.32, -0.38],
@@ -267,7 +267,7 @@ function Table() {
         [-0.21, 0.56, 0.34],
         [0.21, 0.56, 0.34],
       ].map(([x, y, z], i) => (
-        <mesh key={`ring-${i}`} position={[x, y, z]} rotation={[Math.PI / 2, 0, 0]}>
+        <mesh key={`ring-${i}`} position={[x, y, z]} rotation={[Math.PI, 0, 0]}>
           <torusGeometry args={[0.046, 0.012, 10, 20]} />
           <meshStandardMaterial color={goldPure} metalness={0.94} roughness={0.14} />
         </mesh>
@@ -389,7 +389,7 @@ function Lampstand() {
   const lampPositions = [-0.465, -0.31, -0.155, 0, 0.155, 0.31, 0.465]
 
   return (
-    <group position={[-1.5, 0, -6.8]}>
+    <group position={[-1.5, 0, -6.8]} rotation={[0, Math.PI / 2, 0]}>
       {/* Stepped Polygonal Pedestal Base (Chân đế giật cấp đa giác như ảnh) */}
       <mesh position={[0, 0.035, 0]} castShadow>
         <cylinderGeometry args={[0.26, 0.30, 0.07, 8]} />
