@@ -111,13 +111,15 @@ h1 { max-width: 520px; margin: 0; font: 500 clamp(52px, 7vw, 92px)/.91 'Segoe UI
 
 .controls { position: absolute; left: 22px; bottom: 20px; display: flex; align-items: center; gap: 6px; padding: 9px 11px; color: rgba(255,255,255,.64); background: rgba(17,19,15,.62); font-size: 10px; backdrop-filter: blur(10px); }
 kbd, .key { display: inline-grid; min-width: 24px; height: 24px; place-items: center; padding: 0 6px; color: white; border: 1px solid rgba(255,255,255,.3); background: rgba(255,255,255,.09); font: 600 9px/1 'Segoe UI Variable', 'Aptos', sans-serif; }
-.interact { position: absolute; left: 50%; bottom: 88px; display: flex; align-items: center; gap: 10px; padding: 9px 12px 9px 9px; color: white; border: 0; background: rgba(17,19,15,.82); transform: translateX(-50%); animation: lift .25s ease-out both; }
+.interact { position: absolute; left: 50%; bottom: 88px; display: flex; align-items: center; gap: 10px; padding: 9px 12px 9px 9px; color: white; border: 0; background: rgba(17,19,15,.82); transform: translateX(-50%); animation: lift .25s ease-out both; pointer-events: auto; cursor: pointer; }
+.interact:hover { background: rgba(30,34,26,.92); }
 .interact.is-touch { pointer-events: auto; }
 .interact span:last-child { font-size: 12px; }
 .denied { position: absolute; left: 50%; top: 96px; display: flex; align-items: center; gap: 9px; max-width: 420px; padding: 11px 14px; color: #231708; background: var(--gold); transform: translateX(-50%); font-size: 12px; animation: lift .25s ease-out both; }
 
 .fact-panel { position: absolute; right: 22px; bottom: 22px; width: min(390px, calc(100vw - 44px)); padding: 28px; color: #191a16; background: var(--paper); box-shadow: 0 22px 80px rgba(42,31,15,.28); pointer-events: auto; animation: panel-in .38s cubic-bezier(.2,.8,.2,1) both; }
-.fact-panel__close { position: absolute; right: 16px; top: 16px; display: grid; place-items: center; width: 34px; height: 34px; color: #34362f; border: 1px solid rgba(25,26,22,.2); background: transparent; cursor: pointer; }
+.fact-panel__close { position: absolute; right: 16px; top: 16px; display: grid; place-items: center; width: 34px; height: 34px; color: #34362f; border: 1px solid rgba(25,26,22,.2); background: transparent; cursor: pointer; pointer-events: auto; transition: background .15s, color .15s; }
+.fact-panel__close:hover { background: rgba(25,26,22,.12); color: #000; }
 .fact-panel__icon { display: grid; place-items: center; width: 34px; height: 34px; margin-bottom: 28px; color: #7c571d; border: 1px solid #ad8a50; }
 .fact-panel > p:first-of-type { margin: 0 0 10px; color: #7c571d; font: 700 10px/1 'Segoe UI Variable', 'Aptos', sans-serif; letter-spacing: .15em; text-transform: uppercase; }
 .fact-panel h2 { margin: 0 0 12px; font: 600 30px/1.05 'Segoe UI Variable', 'Aptos', sans-serif; letter-spacing: -.04em; }

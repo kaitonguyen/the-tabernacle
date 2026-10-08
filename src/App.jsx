@@ -316,7 +316,17 @@ function Player({ role, started, fact, onDenied, onLockChange, touchMode, touchI
   }, [camera, role])
 
   useEffect(() => {
-    const down = (event) => keys.current.add(event.code)
+    if (fact) {
+      keys.current.clear()
+      velocity.current.set(0, 0, 0)
+    }
+  }, [fact])
+
+  useEffect(() => {
+    const down = (event) => {
+      if (fact) return
+      keys.current.add(event.code)
+    }
     const up = (event) => keys.current.delete(event.code)
     const clear = () => keys.current.clear()
     window.addEventListener('keydown', down)
@@ -327,10 +337,10 @@ function Player({ role, started, fact, onDenied, onLockChange, touchMode, touchI
       window.removeEventListener('keyup', up)
       window.removeEventListener('blur', clear)
     }
-  }, [])
+  }, [fact])
 
   useFrame((_, delta) => {
-    if (!started || (!touchMode && !controls.current?.isLocked)) return
+    if (!started || fact || (!touchMode && !controls.current?.isLocked)) return
     const speed = keys.current.has('ShiftLeft') ? 5.2 : 3.2
     const touchKeys = touchInput.current.keys
     const forward = Number(keys.current.has('KeyW') || keys.current.has('ArrowUp') || touchKeys.has('KeyW')) - Number(keys.current.has('KeyS') || keys.current.has('ArrowDown') || touchKeys.has('KeyS'))
@@ -396,10 +406,12 @@ function Player({ role, started, fact, onDenied, onLockChange, touchMode, touchI
     else lastSafe.current.copy(p)
   })
 
-  return touchMode ? null : (
+  if (!started || fact || touchMode) return null
+
+  return (
     <PointerLockControls
       ref={controls}
-      enabled={started && !fact}
+      selector="#resume-walk, .resume"
       onLock={() => onLockChange(true)}
       onUnlock={() => onLockChange(false)}
     />
@@ -544,7 +556,7 @@ function GameUI({ role, activeSpot, fact, denied, locked, touchMode, touchInput,
       <MiniMap role={role} />
       <div className="crosshair"><i></i><i></i></div>
       {!touchMode && !locked && !fact && (
-        <button className="resume" onClick={resume}>
+        <button id="resume-walk" className="resume" onClick={resume}>
           <MouseSimple size={22} />
           <strong>Click chuột để di chuyển</strong>
           <span>Điều khiển chuột để quan sát · WASD để di chuyển · Esc để dừng</span>
@@ -618,13 +630,17 @@ export default function App() {
       setActiveSpot(closest?.id ?? null)
     }, 120)
     const inspect = (event) => {
-      if (event.code === 'KeyE' && activeSpot) inspectActive()
-      if (event.code === 'Escape' && fact) setFact(null)
+      if (event.code === 'KeyE' && activeSpot && !fact) inspectActive()
+    }
+    const clickInspect = () => {
+      if (activeSpot && !fact && document.pointerLockElement) inspectActive()
     }
     window.addEventListener('keydown', inspect)
+    window.addEventListener('click', clickInspect)
     return () => {
       window.clearInterval(interval)
       window.removeEventListener('keydown', inspect)
+      window.removeEventListener('click', clickInspect)
       window.clearTimeout(deniedTimer.current)
     }
   }, [started, activeSpot, fact, inspectActive])
@@ -633,14 +649,6 @@ export default function App() {
 
   const handleStart = () => {
     setStarted(true)
-    if (!touchMode) {
-      try {
-        const res = document.querySelector('canvas')?.requestPointerLock()
-        if (res && typeof res.catch === 'function') res.catch(() => {})
-      } catch {
-        // Ignored
-      }
-    }
   }
 
   return (
