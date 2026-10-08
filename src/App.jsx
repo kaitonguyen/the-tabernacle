@@ -411,7 +411,6 @@ function Player({ role, started, fact, onDenied, onLockChange, touchMode, touchI
   return (
     <PointerLockControls
       ref={controls}
-      selector="#resume-walk, .resume"
       onLock={() => onLockChange(true)}
       onUnlock={() => onLockChange(false)}
     />
@@ -538,7 +537,8 @@ function TouchControls({ input }) {
 }
 
 function GameUI({ role, activeSpot, fact, denied, locked, touchMode, touchInput, onInspect, onCloseFact, onExit }) {
-  const resume = () => {
+  const resume = (e) => {
+    e?.stopPropagation()
     try {
       const res = document.querySelector('canvas')?.requestPointerLock()
       if (res && typeof res.catch === 'function') res.catch(() => {})
@@ -551,7 +551,7 @@ function GameUI({ role, activeSpot, fact, denied, locked, touchMode, touchInput,
       <header className="topbar">
         <div className="wordmark"><span className="brand-mark">ת</span><span>{SITE.brand}</span></div>
         <div className="role-chip"><RoleIcon role={role} /><span>{ROLES[role].name}</span><small>{ROLES[role].access}</small></div>
-        <button className="icon-button" aria-label="Leave experience" onClick={onExit}><SignOut size={20} /></button>
+        <button className="icon-button" aria-label="Leave experience" onClick={(e) => { e.stopPropagation(); onExit(); }}><SignOut size={20} /></button>
       </header>
       <MiniMap role={role} />
       <div className="crosshair"><i></i><i></i></div>
@@ -562,13 +562,37 @@ function GameUI({ role, activeSpot, fact, denied, locked, touchMode, touchInput,
           <span>Điều khiển chuột để quan sát · WASD để di chuyển · Esc để dừng</span>
         </button>
       )}
-      {activeSpot && !fact && <button className={`interact ${touchMode ? 'is-touch' : ''}`} onClick={onInspect}><span className="key">{touchMode ? 'Tap' : 'E'}</span><span>Kiểm tra {FACTS[activeSpot].title}</span></button>}
+      {activeSpot && !fact && (
+        <button
+          className={`interact ${touchMode ? 'is-touch' : ''}`}
+          onClick={(e) => {
+            e.stopPropagation()
+            onInspect()
+          }}
+        >
+          <span className="key">{touchMode ? 'Tap' : 'E'}</span>
+          <span>Kiểm tra {FACTS[activeSpot].title}</span>
+        </button>
+      )}
       {denied && <div className="denied"><Info size={18} weight="fill" /><span>{denied}</span></div>}
       <div className="controls"><MouseSimple size={18} /><span>Quan sát</span><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd><span>Di chuyển</span><kbd>Shift</kbd><span>Di chuyển nhanh hơn</span></div>
       {touchMode && !fact && <TouchControls input={touchInput} />}
       {fact && (
-        <aside className="fact-panel">
-          <button className="fact-panel__close" onClick={onCloseFact} aria-label="Close information"><X size={20} /></button>
+        <aside
+          className="fact-panel"
+          onPointerDown={(e) => e.stopPropagation()}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <button
+            className="fact-panel__close"
+            onClick={(e) => {
+              e.stopPropagation()
+              onCloseFact()
+            }}
+            aria-label="Close information"
+          >
+            <X size={20} />
+          </button>
           <div className="fact-panel__icon"><Sparkle size={18} /></div>
           <p>{fact.ref}</p>
           <h2>{fact.title}</h2>
@@ -649,6 +673,14 @@ export default function App() {
 
   const handleStart = () => {
     setStarted(true)
+    if (!touchMode) {
+      try {
+        const res = document.querySelector('canvas')?.requestPointerLock()
+        if (res && typeof res.catch === 'function') res.catch(() => {})
+      } catch {
+        // Ignored
+      }
+    }
   }
 
   return (
