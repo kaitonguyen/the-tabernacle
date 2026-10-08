@@ -38,6 +38,9 @@ const HOTSPOTS = [
 ]
 
 const gold = '#bd8f35'
+const goldPure = '#e5b83b'
+const goldDark = '#b88928'
+const acaciaWood = '#6a3617'
 const bronze = '#875228'
 const linen = '#e9e2ce'
 const acacia = '#70401f'
@@ -211,30 +214,261 @@ function Laver() {
 }
 
 function Table() {
-  const loaves = Array.from({ length: 12 }, (_, i) => {
-    const row = Math.floor(i / 6)
-    const column = i % 6
-    return [-0.33 + column * 0.132, 0.72, row === 0 ? -0.1 : 0.1]
-  })
+  const stack1 = useMemo(() => Array.from({ length: 6 }, (_, i) => [0, 0.70 + i * 0.016, -0.11]), [])
+  const stack2 = useMemo(() => Array.from({ length: 6 }, (_, i) => [0, 0.70 + i * 0.016, 0.11]), [])
+
+  const teethLong = useMemo(() => {
+    const list = []
+    for (let i = -6; i <= 6; i++) {
+      list.push([-0.222, 0.708, i * 0.065])
+      list.push([0.222, 0.708, i * 0.065])
+    }
+    return list
+  }, [])
+
+  const teethShort = useMemo(() => {
+    const list = []
+    for (let i = -2; i <= 2; i++) {
+      list.push([i * 0.08, 0.708, -0.442])
+      list.push([i * 0.08, 0.708, 0.442])
+    }
+    return list
+  }, [])
+
   return (
-    <group position={[1.55, 0, -6.7]}>
-      <Box position={[0, 0.62, 0]} args={[0.9, 0.11, 0.45]} color={gold} metalness={0.75} roughness={0.22} />
-      {[[-0.38, 0.31, -0.16], [0.38, 0.31, -0.16], [-0.38, 0.31, 0.16], [0.38, 0.31, 0.16]].map((p, i) => <Box key={i} position={p} args={[0.06, 0.62, 0.06]} color={gold} metalness={0.75} roughness={0.22} />)}
-      {loaves.map((position, i) => <Box key={i} position={position} args={[0.1, 0.055, 0.14]} color="#d2a85f" roughness={0.85} />)}
+    <group position={[1.55, 0, -6.7]} rotation={[0, Math.PI / 2, 0]}>
+      {/* 4 Golden Legs with Tapered Feet and Upper Capitals */}
+      {[
+        [-0.17, 0.32, -0.38],
+        [0.17, 0.32, -0.38],
+        [-0.17, 0.32, 0.38],
+        [0.17, 0.32, 0.38],
+      ].map(([x, y, z], i) => (
+        <group key={`leg-${i}`} position={[x, 0, z]}>
+          <mesh position={[0, 0.32, 0]} castShadow>
+            <boxGeometry args={[0.06, 0.62, 0.06]} />
+            <meshStandardMaterial color={goldPure} metalness={0.88} roughness={0.2} />
+          </mesh>
+          <mesh position={[0, 0.03, 0]} castShadow>
+            <cylinderGeometry args={[0.042, 0.052, 0.06, 8]} />
+            <meshStandardMaterial color={goldPure} metalness={0.9} roughness={0.18} />
+          </mesh>
+          <mesh position={[0, 0.58, 0]} castShadow>
+            <boxGeometry args={[0.075, 0.06, 0.075]} />
+            <meshStandardMaterial color={goldPure} metalness={0.9} roughness={0.18} />
+          </mesh>
+        </group>
+      ))}
+
+      {/* 4 Cast Gold Carrying Rings (Khoen đúc) on the Legs */}
+      {[
+        [-0.21, 0.56, -0.34],
+        [0.21, 0.56, -0.34],
+        [-0.21, 0.56, 0.34],
+        [0.21, 0.56, 0.34],
+      ].map(([x, y, z], i) => (
+        <mesh key={`ring-${i}`} position={[x, y, z]} rotation={[Math.PI / 2, 0, 0]}>
+          <torusGeometry args={[0.046, 0.012, 10, 20]} />
+          <meshStandardMaterial color={goldPure} metalness={0.94} roughness={0.14} />
+        </mesh>
+      ))}
+
+      {/* 2 Long Carrying Poles passing through the rings along the table's length */}
+      {[-0.21, 0.21].map((x, i) => (
+        <mesh key={`pole-${i}`} position={[x, 0.56, 0]} rotation={[Math.PI / 2, 0, 0]} castShadow>
+          <cylinderGeometry args={[0.026, 0.026, 1.35, 16]} />
+          <meshStandardMaterial color={goldPure} metalness={0.85} roughness={0.22} />
+        </mesh>
+      ))}
+
+      {/* Table Apron & Decorative Fluted Molding */}
+      <Box position={[0, 0.62, 0]} args={[0.42, 0.09, 0.86]} color={goldPure} metalness={0.88} roughness={0.2} />
+      <Box position={[0, 0.665, 0]} args={[0.46, 0.025, 0.92]} color={goldDark} metalness={0.9} roughness={0.18} />
+
+      {/* Tabletop Surface */}
+      <Box position={[0, 0.685, 0]} args={[0.45, 0.025, 0.90]} color={goldPure} metalness={0.9} roughness={0.18} />
+
+      {/* Crown Rim / Crenellated border (Gờ vương miện xung quanh mặt bàn như ảnh) */}
+      <Box position={[0, 0.702, -0.445]} args={[0.45, 0.02, 0.015]} color={goldPure} metalness={0.92} roughness={0.18} />
+      <Box position={[0, 0.702, 0.445]} args={[0.45, 0.02, 0.015]} color={goldPure} metalness={0.92} roughness={0.18} />
+      <Box position={[-0.222, 0.702, 0]} args={[0.015, 0.02, 0.90]} color={goldPure} metalness={0.92} roughness={0.18} />
+      <Box position={[0.222, 0.702, 0]} args={[0.015, 0.02, 0.90]} color={goldPure} metalness={0.92} roughness={0.18} />
+      {teethLong.map((pos, i) => (
+        <Box key={`tl-${i}`} position={pos} args={[0.018, 0.024, 0.03]} color={goldPure} metalness={0.92} roughness={0.18} />
+      ))}
+      {teethShort.map((pos, i) => (
+        <Box key={`ts-${i}`} position={pos} args={[0.035, 0.024, 0.018]} color={goldPure} metalness={0.92} roughness={0.18} />
+      ))}
+
+      {/* Golden Presentation Platter / Tray for Showbread in center */}
+      <mesh position={[0, 0.70, 0]} castShadow>
+        <cylinderGeometry args={[0.22, 0.23, 0.012, 32]} />
+        <meshStandardMaterial color={goldPure} metalness={0.94} roughness={0.15} />
+      </mesh>
+
+      {/* 2 Stacks of 6 Round Loaves of Showbread (Bánh trần thiết) */}
+      {stack1.map(([x, y, z], i) => (
+        <mesh key={`s1-${i}`} position={[x, y, z]} castShadow>
+          <cylinderGeometry args={[0.082, 0.082, 0.015, 20]} />
+          <meshStandardMaterial color="#deb16e" roughness={0.88} />
+        </mesh>
+      ))}
+      {stack2.map(([x, y, z], i) => (
+        <mesh key={`s2-${i}`} position={[x, y, z]} castShadow>
+          <cylinderGeometry args={[0.082, 0.082, 0.015, 20]} />
+          <meshStandardMaterial color="#deb16e" roughness={0.88} />
+        </mesh>
+      ))}
+
+      {/* Golden Incense Cups on top of the bread stacks */}
+      <mesh position={[0, 0.805, -0.11]} castShadow>
+        <cylinderGeometry args={[0.026, 0.014, 0.022, 14]} />
+        <meshStandardMaterial color={goldPure} metalness={0.94} roughness={0.15} />
+      </mesh>
+      <mesh position={[0, 0.805, 0.11]} castShadow>
+        <cylinderGeometry args={[0.026, 0.014, 0.022, 14]} />
+        <meshStandardMaterial color={goldPure} metalness={0.94} roughness={0.15} />
+      </mesh>
+
+      {/* Golden Chalices / Goblets (Chén uống tế lễ) standing on the table ends */}
+      {[
+        [0, 0.71, -0.32],
+        [0, 0.71, 0.32],
+      ].map(([x, y, z], i) => (
+        <group key={`cup-${i}`} position={[x, y, z]}>
+          <mesh position={[0, 0.015, 0]} castShadow>
+            <cylinderGeometry args={[0.032, 0.038, 0.02, 16]} />
+            <meshStandardMaterial color={goldPure} metalness={0.94} roughness={0.15} />
+          </mesh>
+          <mesh position={[0, 0.065, 0]} castShadow>
+            <cylinderGeometry args={[0.012, 0.014, 0.08, 12]} />
+            <meshStandardMaterial color={goldPure} metalness={0.94} roughness={0.15} />
+          </mesh>
+          <mesh position={[0, 0.12, 0]} castShadow>
+            <cylinderGeometry args={[0.034, 0.018, 0.06, 16]} />
+            <meshStandardMaterial color={goldPure} metalness={0.94} roughness={0.15} />
+          </mesh>
+          <mesh position={[0, 0.135, 0]}>
+            <circleGeometry args={[0.028, 16]} />
+            <meshStandardMaterial color="#7a1215" roughness={0.2} metalness={0.3} />
+          </mesh>
+        </group>
+      ))}
     </group>
   )
 }
 
 function Lampstand() {
-  const branches = [-0.42, -0.27, -0.13, 0, 0.13, 0.27, 0.42]
+  const branchGeometries = useMemo(() => {
+    const pairs = [
+      { x: 0.155, yStart: 0.62 },
+      { x: 0.31, yStart: 0.50 },
+      { x: 0.465, yStart: 0.38 },
+    ]
+    const yTop = 1.15
+    return pairs.flatMap(({ x, yStart }) => {
+      const curveR = new THREE.CubicBezierCurve3(
+        new THREE.Vector3(0, yStart, 0),
+        new THREE.Vector3(x * 0.45, yStart, 0),
+        new THREE.Vector3(x, yStart + (yTop - yStart) * 0.45, 0),
+        new THREE.Vector3(x, yTop - 0.05, 0),
+      )
+      const curveL = new THREE.CubicBezierCurve3(
+        new THREE.Vector3(0, yStart, 0),
+        new THREE.Vector3(-x * 0.45, yStart, 0),
+        new THREE.Vector3(-x, yStart + (yTop - yStart) * 0.45, 0),
+        new THREE.Vector3(-x, yTop - 0.05, 0),
+      )
+      return [
+        { x, yTop, geom: new THREE.TubeGeometry(curveR, 32, 0.018, 12, false) },
+        { x: -x, yTop, geom: new THREE.TubeGeometry(curveL, 32, 0.018, 12, false) },
+      ]
+    })
+  }, [])
+
+  const lampPositions = [-0.465, -0.31, -0.155, 0, 0.155, 0.31, 0.465]
+
   return (
     <group position={[-1.5, 0, -6.8]}>
-      <mesh position={[0, 0.18, 0]} castShadow><cylinderGeometry args={[0.3, 0.38, 0.12, 20]} /><meshStandardMaterial color={gold} metalness={0.85} roughness={0.18} /></mesh>
-      {branches.map((x, i) => (
-        <group key={x}>
-          <mesh position={[x, 0.62 + Math.abs(3 - i) * 0.07, 0]} castShadow><cylinderGeometry args={[0.025, 0.035, 0.82, 10]} /><meshStandardMaterial color={gold} metalness={0.85} roughness={0.18} /></mesh>
-          <mesh position={[x, 1.05 + Math.abs(3 - i) * 0.07, 0]}><sphereGeometry args={[0.08, 12, 8]} /><meshStandardMaterial color="#ffb24a" emissive="#ff6b1a" emissiveIntensity={3} /></mesh>
-          <pointLight position={[x, 1.05, 0]} color="#ff9b46" intensity={0.7} distance={4} />
+      {/* Stepped Polygonal Pedestal Base (Chân đế giật cấp đa giác như ảnh) */}
+      <mesh position={[0, 0.035, 0]} castShadow>
+        <cylinderGeometry args={[0.26, 0.30, 0.07, 8]} />
+        <meshStandardMaterial color={goldPure} metalness={0.9} roughness={0.16} />
+      </mesh>
+      <mesh position={[0, 0.085, 0]} castShadow>
+        <cylinderGeometry args={[0.20, 0.24, 0.05, 8]} />
+        <meshStandardMaterial color={goldPure} metalness={0.92} roughness={0.15} />
+      </mesh>
+      <mesh position={[0, 0.13, 0]} castShadow>
+        <cylinderGeometry args={[0.13, 0.18, 0.05, 8]} />
+        <meshStandardMaterial color={goldPure} metalness={0.92} roughness={0.15} />
+      </mesh>
+      {[-0.24, 0, 0.24].flatMap((x) => [-0.24, 0.24].map((z) => (
+        <mesh key={`foot-${x}-${z}`} position={[x, 0.015, z]}>
+          <cylinderGeometry args={[0.025, 0.035, 0.03, 8]} />
+          <meshStandardMaterial color={goldPure} metalness={0.9} roughness={0.2} />
+        </mesh>
+      )))}
+
+      {/* Central Shaft (Trục chính thẳng đứng) */}
+      <mesh position={[0, 0.65, 0]} castShadow>
+        <cylinderGeometry args={[0.026, 0.036, 1.0, 16]} />
+        <meshStandardMaterial color={goldPure} metalness={0.92} roughness={0.15} />
+      </mesh>
+
+      {/* Knops and Blossom collars along central shaft */}
+      {[0.24, 0.38, 0.50, 0.62, 0.80, 0.98].map((y, i) => (
+        <group key={`shaft-knot-${i}`} position={[0, y, 0]}>
+          <mesh castShadow>
+            <sphereGeometry args={[0.042, 12, 10]} />
+            <meshStandardMaterial color={goldPure} metalness={0.94} roughness={0.14} />
+          </mesh>
+          <mesh position={[0, 0.035, 0]} castShadow>
+            <cylinderGeometry args={[0.042, 0.024, 0.035, 12]} />
+            <meshStandardMaterial color={goldPure} metalness={0.94} roughness={0.14} />
+          </mesh>
+        </group>
+      ))}
+
+      {/* 6 Curved Semicircular Branches */}
+      {branchGeometries.map(({ x, geom }, i) => (
+        <group key={`branch-${i}`}>
+          <mesh geometry={geom} castShadow>
+            <meshStandardMaterial color={goldPure} metalness={0.92} roughness={0.15} />
+          </mesh>
+          {/* Blossom knop along vertical section of branch */}
+          <mesh position={[x, 0.92, 0]} castShadow>
+            <sphereGeometry args={[0.034, 10, 8]} />
+            <meshStandardMaterial color={goldPure} metalness={0.94} roughness={0.14} />
+          </mesh>
+          <mesh position={[x, 0.955, 0]} castShadow>
+            <cylinderGeometry args={[0.036, 0.02, 0.03, 12]} />
+            <meshStandardMaterial color={goldPure} metalness={0.94} roughness={0.14} />
+          </mesh>
+        </group>
+      ))}
+
+      {/* 7 Lamp Tops ending at the exact same horizontal height line (1.15m) */}
+      {lampPositions.map((x) => (
+        <group key={`lamp-${x}`} position={[x, 1.15, 0]}>
+          <mesh castShadow>
+            <cylinderGeometry args={[0.042, 0.022, 0.045, 16]} />
+            <meshStandardMaterial color={goldPure} metalness={0.94} roughness={0.14} />
+          </mesh>
+          <mesh position={[0, 0.025, 0]}>
+            <torusGeometry args={[0.04, 0.008, 8, 16]} />
+            <meshStandardMaterial color={goldPure} metalness={0.94} roughness={0.14} />
+          </mesh>
+          <mesh position={[0, 0.065, 0]}>
+            <coneGeometry args={[0.018, 0.06, 12]} />
+            <meshStandardMaterial
+              color="#ffc855"
+              emissive="#ff7711"
+              emissiveIntensity={4}
+              roughness={0.2}
+            />
+          </mesh>
+          <pointLight position={[0, 0.08, 0]} color="#ffa344" intensity={0.8} distance={4.5} />
         </group>
       ))}
     </group>
@@ -250,30 +484,197 @@ function IncenseAltar() {
   )
 }
 
+function Cherub({ side = 1 }) {
+  const isLeft = side < 0
+  const dir = isLeft ? 1 : -1
+  const posX = isLeft ? -0.38 : 0.38
+
+  const featherBlades = useMemo(() => [
+    { x: 0.10, y: 0.32, len: 0.38, rotZ: 0.48, w: 0.045 },
+    { x: 0.16, y: 0.26, len: 0.35, rotZ: 0.38, w: 0.048 },
+    { x: 0.22, y: 0.20, len: 0.32, rotZ: 0.28, w: 0.050 },
+    { x: 0.28, y: 0.14, len: 0.28, rotZ: 0.18, w: 0.052 },
+    { x: 0.32, y: 0.08, len: 0.24, rotZ: 0.08, w: 0.054 },
+    { x: 0.35, y: 0.02, len: 0.20, rotZ: -0.02, w: 0.055 },
+  ], [])
+
+  return (
+    <group position={[posX, 0.77, 0]}>
+      {/* Kneeling robe base on the Mercy Seat */}
+      <mesh position={[-dir * 0.07, 0.05, 0]} castShadow>
+        <boxGeometry args={[0.22, 0.10, 0.26]} />
+        <meshStandardMaterial color={goldPure} metalness={0.92} roughness={0.16} />
+      </mesh>
+      {/* Torso leaning forward toward center */}
+      <mesh position={[0, 0.16, 0]} rotation={[0, 0, dir * 0.22]} castShadow>
+        <cylinderGeometry args={[0.07, 0.095, 0.16, 12]} />
+        <meshStandardMaterial color={goldPure} metalness={0.92} roughness={0.16} />
+      </mesh>
+      {/* Shoulders / Upper back */}
+      <mesh position={[dir * 0.03, 0.26, 0]} rotation={[0, 0, dir * 0.18]} castShadow>
+        <boxGeometry args={[0.13, 0.12, 0.22]} />
+        <meshStandardMaterial color={goldPure} metalness={0.92} roughness={0.16} />
+      </mesh>
+      {/* Reverent Bowed Head with Golden Veil/Hood */}
+      <group position={[dir * 0.08, 0.34, 0]} rotation={[0, 0, dir * 0.38]}>
+        <mesh castShadow>
+          <sphereGeometry args={[0.065, 14, 12]} />
+          <meshStandardMaterial color={goldPure} metalness={0.94} roughness={0.14} />
+        </mesh>
+        <mesh position={[dir * 0.03, -0.02, 0]} castShadow>
+          <boxGeometry args={[0.045, 0.06, 0.07]} />
+          <meshStandardMaterial color={goldPure} metalness={0.94} roughness={0.14} />
+        </mesh>
+      </group>
+      {/* Reverent arms outstretched toward Mercy Seat */}
+      {[-0.07, 0.07].map((z, i) => (
+        <mesh key={`arm-${i}`} position={[dir * 0.09, 0.17, z]} rotation={[0, 0, dir * 0.58]} castShadow>
+          <boxGeometry args={[0.15, 0.045, 0.045]} />
+          <meshStandardMaterial color={goldPure} metalness={0.92} roughness={0.16} />
+        </mesh>
+      ))}
+
+      {/* Two Wings (Front and Back) arching up and forward toward center */}
+      {[-1, 1].map((wingZSign) => (
+        <group key={`wing-${wingZSign}`} position={[0, 0.24, wingZSign * 0.07]}>
+          {/* Main wing leading-edge spar / bone arching up to center */}
+          <mesh
+            position={[dir * 0.18, 0.24, 0]}
+            rotation={[0, -wingZSign * 0.12, dir * 0.62]}
+            castShadow
+          >
+            <boxGeometry args={[0.42, 0.045, 0.035]} />
+            <meshStandardMaterial color={goldPure} metalness={0.94} roughness={0.14} />
+          </mesh>
+          {/* Wing tip reaching forward above center x = 0 */}
+          <mesh
+            position={[dir * 0.34, 0.37, 0]}
+            rotation={[0, -wingZSign * 0.08, dir * 0.22]}
+            castShadow
+          >
+            <boxGeometry args={[0.26, 0.035, 0.03]} />
+            <meshStandardMaterial color={goldPure} metalness={0.94} roughness={0.14} />
+          </mesh>
+          {/* Layered Flight Feathers */}
+          {featherBlades.map((f, i) => (
+            <mesh
+              key={`fb-${i}`}
+              position={[dir * f.x, f.y, wingZSign * 0.01]}
+              rotation={[0, -wingZSign * 0.10, dir * f.rotZ]}
+              castShadow
+            >
+              <boxGeometry args={[f.len, 0.022, f.w]} />
+              <meshStandardMaterial color={goldPure} metalness={0.94} roughness={0.14} />
+            </mesh>
+          ))}
+        </group>
+      ))}
+    </group>
+  )
+}
+
 function Ark() {
   return (
     <group position={[0, 0, TENT_BACK + 2.3]}>
-      <Box position={[0, 0.42, 0]} args={[1.125, 0.675, 0.675]} color={gold} metalness={0.82} roughness={0.18} />
-      <Box position={[0, 0.79, 0]} args={[1.18, 0.07, 0.72]} color="#d4a844" metalness={0.9} roughness={0.14} />
-      {[-0.43, 0.43].flatMap((x) => [-0.37, 0.37].map((z) => (
-        <mesh key={`${x}-${z}`} position={[x, 0.28, z]}>
-          <torusGeometry args={[0.085, 0.018, 8, 18]} />
-          <meshStandardMaterial color={gold} metalness={0.88} roughness={0.16} />
-        </mesh>
-      )))}
-      {[-0.43, 0.43].map((z) => (
-        <mesh key={`pole-${z}`} position={[0, 0.28, z]} rotation={[0, 0, Math.PI / 2]} castShadow>
-          <cylinderGeometry args={[0.035, 0.035, 1.9, 10]} />
-          <meshStandardMaterial color={gold} metalness={0.8} roughness={0.22} />
-        </mesh>
-      ))}
-      {[-0.32, 0.32].map((x) => (
-        <group key={x} position={[x, 1.02, 0]} rotation={[0, 0, x < 0 ? -0.25 : 0.25]}>
-          <mesh castShadow><sphereGeometry args={[0.1, 12, 10]} /><meshStandardMaterial color={gold} metalness={0.88} roughness={0.15} /></mesh>
-          <mesh position={[x < 0 ? 0.12 : -0.12, 0.06, 0]} rotation={[0, 0, x < 0 ? -0.7 : 0.7]} castShadow><boxGeometry args={[0.38, 0.05, 0.28]} /><meshStandardMaterial color={gold} metalness={0.88} roughness={0.15} /></mesh>
+      {/* 4 Corner Columns with Turned Rings & Finial Feet */}
+      {[
+        [-0.53, 0.35, -0.30],
+        [0.53, 0.35, -0.30],
+        [-0.53, 0.35, 0.30],
+        [0.53, 0.35, 0.30],
+      ].map(([x, y, z], i) => (
+        <group key={`corner-${i}`} position={[x, 0, z]}>
+          <mesh position={[0, 0.025, 0]} castShadow>
+            <cylinderGeometry args={[0.038, 0.048, 0.05, 16]} />
+            <meshStandardMaterial color={goldPure} metalness={0.92} roughness={0.15} />
+          </mesh>
+          <mesh position={[0, 0.06, 0]} castShadow>
+            <sphereGeometry args={[0.042, 14, 10]} />
+            <meshStandardMaterial color={goldPure} metalness={0.92} roughness={0.15} />
+          </mesh>
+          <mesh position={[0, 0.36, 0]} castShadow>
+            <cylinderGeometry args={[0.038, 0.038, 0.58, 16]} />
+            <meshStandardMaterial color={goldPure} metalness={0.92} roughness={0.15} />
+          </mesh>
+          {[0.12, 0.36, 0.60].map((ringY) => (
+            <mesh key={ringY} position={[0, ringY, 0]}>
+              <torusGeometry args={[0.045, 0.012, 10, 20]} />
+              <meshStandardMaterial color={goldPure} metalness={0.94} roughness={0.14} />
+            </mesh>
+          ))}
         </group>
       ))}
-      <pointLight position={[0, 2.1, 0]} color="#fff4c2" intensity={2.8} distance={5} />
+
+      {/* Stepped Base Molding Plinth (Đế hòm) */}
+      <Box position={[0, 0.07, 0]} args={[1.12, 0.05, 0.66]} color={goldPure} metalness={0.9} roughness={0.18} />
+      <Box position={[0, 0.10, 0]} args={[1.08, 0.03, 0.62]} color={goldDark} metalness={0.92} roughness={0.16} />
+
+      {/* Main Chest Body (Thân Hòm) */}
+      <Box position={[0, 0.38, 0]} args={[1.04, 0.52, 0.58]} color={goldPure} metalness={0.88} roughness={0.2} />
+
+      {/* Raised Inset Relief Panels with Hammered Gold (Vách chạm khắc như ảnh) */}
+      {[-0.292, 0.292].map((z, i) => (
+        <group key={`front-back-${i}`} position={[0, 0.38, z]}>
+          <Box position={[0, 0, 0]} args={[0.88, 0.38, 0.015]} color={goldDark} metalness={0.92} roughness={0.16} />
+          <Box position={[0, 0, z > 0 ? 0.006 : -0.006]} args={[0.84, 0.34, 0.01]} color="#e3b64c" metalness={0.85} roughness={0.48} />
+        </group>
+      ))}
+      {[-0.522, 0.522].map((x, i) => (
+        <group key={`side-panel-${i}`} position={[x, 0.38, 0]}>
+          <Box position={[0, 0, 0]} args={[0.015, 0.38, 0.44]} color={goldDark} metalness={0.92} roughness={0.16} />
+          <Box position={[x > 0 ? 0.006 : -0.006, 0, 0]} args={[0.01, 0.34, 0.40]} color="#e3b64c" metalness={0.85} roughness={0.48} />
+        </group>
+      ))}
+
+      {/* Top Stepped Crown Molding (Gờ vương miện phía trên) */}
+      <Box position={[0, 0.655, 0]} args={[1.10, 0.03, 0.64]} color={goldDark} metalness={0.92} roughness={0.16} />
+      <Box position={[0, 0.685, 0]} args={[1.14, 0.035, 0.68]} color={goldPure} metalness={0.92} roughness={0.16} />
+
+      {/* 4 Cast Gold Rings (Khoen đúc) on the sides */}
+      {[
+        [-0.44, 0.36, -0.33],
+        [0.44, 0.36, -0.33],
+        [-0.44, 0.36, 0.33],
+        [0.44, 0.36, 0.33],
+      ].map(([x, y, z], i) => (
+        <mesh key={`ark-ring-${i}`} position={[x, y, z]} rotation={[0, Math.PI / 2, 0]}>
+          <torusGeometry args={[0.065, 0.016, 12, 24]} />
+          <meshStandardMaterial color={goldPure} metalness={0.94} roughness={0.14} />
+        </mesh>
+      ))}
+
+      {/* 2 Long Carrying Poles passing through the rings (Đòn khiêng bằng gỗ keo dát vàng) */}
+      {[-0.33, 0.33].map((z, i) => (
+        <group key={`ark-pole-${i}`} position={[0, 0.36, z]}>
+          <mesh rotation={[0, 0, Math.PI / 2]} castShadow>
+            <cylinderGeometry args={[0.034, 0.034, 2.05, 18]} />
+            <meshStandardMaterial color={acaciaWood} roughness={0.32} metalness={0.15} />
+          </mesh>
+          {[-0.44, 0.44].map((x) => (
+            <mesh key={`sleeve-${x}`} position={[x, 0, 0]} rotation={[0, 0, Math.PI / 2]}>
+              <cylinderGeometry args={[0.039, 0.039, 0.12, 16]} />
+              <meshStandardMaterial color={goldPure} metalness={0.92} roughness={0.16} />
+            </mesh>
+          ))}
+          {[-1.01, 1.01].map((x) => (
+            <mesh key={`tip-${x}`} position={[x, 0, 0]} rotation={[0, 0, Math.PI / 2]}>
+              <cylinderGeometry args={[0.036, 0.025, 0.06, 16]} />
+              <meshStandardMaterial color={goldPure} metalness={0.92} roughness={0.16} />
+            </mesh>
+          ))}
+        </group>
+      ))}
+
+      {/* The Mercy Seat (Nắp Thi Ân / Lid of solid gold) */}
+      <Box position={[0, 0.725, 0]} args={[1.18, 0.045, 0.72]} color={goldPure} metalness={0.94} roughness={0.14} />
+      <Box position={[0, 0.76, 0]} args={[1.12, 0.025, 0.66]} color={goldPure} metalness={0.94} roughness={0.14} />
+
+      {/* The Two Cherubim Facing Each Other with Wings Outspread Meeting in Center */}
+      <Cherub side={-1} />
+      <Cherub side={1} />
+
+      {/* Shekinah Glory Divine Radiance between the Cherubim */}
+      <pointLight position={[0, 1.25, 0]} color="#fff7d6" intensity={3.2} distance={6} />
     </group>
   )
 }
@@ -397,10 +798,10 @@ function Player({ role, started, fact, onDenied, onLockChange, touchMode, touchI
     const collidesCircle = (cx, cz, radius) => Math.hypot(p.x - cx, p.z - cz) < radius + playerRadius
     if (collidesBox(0, 10, 1.125, 1.125) || collidesCircle(0, 3, 0.72)) valid = false
     if (inTentX && atTentDepth && (
-      collidesBox(1.55, -6.7, 0.45, 0.225) ||
+      collidesBox(1.55, -6.7, 0.25, 0.48) ||
       collidesCircle(-1.5, -6.8, 0.48) ||
       collidesBox(0, VEIL_Z + 1.25, 0.225, 0.225) ||
-      collidesBox(0, TENT_BACK + 2.3, 0.57, 0.35)
+      collidesBox(0, TENT_BACK + 2.3, 0.58, 0.36)
     )) valid = false
     if (!valid) p.copy(lastSafe.current)
     else lastSafe.current.copy(p)
