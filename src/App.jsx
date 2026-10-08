@@ -39,6 +39,7 @@ const HOTSPOTS = [
 
 const gold = '#bd8f35'
 const goldPure = '#e5b83b'
+const goldWarm = '#f3c448'
 const goldDark = '#b88928'
 const acaciaWood = '#6a3617'
 const bronze = '#875228'
@@ -163,33 +164,91 @@ function Tent() {
 function Horn({ position, material }) {
   return (
     <mesh position={position} castShadow>
-      <coneGeometry args={[0.13, 0.42, 8]} />
+      <coneGeometry args={[0.05, 0.2, 16]} />
       <meshStandardMaterial color={material} metalness={0.7} roughness={0.32} />
     </mesh>
   )
 }
 
 function BronzeAltar() {
+  const gridBars = useMemo(() => {
+    return [-0.70, -0.525, -0.35, -0.175, 0, 0.175, 0.35, 0.525, 0.70]
+  }, [])
+
   return (
     <group position={[0, 0, 10]}>
-      <Box position={[0, 0.675, 0]} args={[2.25, 1.35, 2.25]} color={bronze} metalness={0.65} roughness={0.38} />
-      {[[-1.0, 1.5, -1], [1, 1.5, -1], [-1, 1.5, 1], [1, 1.5, 1]].map((p, i) => <Horn key={i} position={p} material={bronze} />)}
-      <mesh position={[0, 1.37, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-        <planeGeometry args={[1.75, 1.75]} />
-        <meshStandardMaterial color="#24150e" roughness={1} wireframe />
+      {/* Main Bronze Altar Box (2.25 x 1.35 x 2.25m) */}
+      <Box position={[0, 0.675, 0]} args={[2.25, 1.35, 2.25]} color={bronze} metalness={0.72} roughness={0.32} />
+
+      {/* Decorative Bronze Base Plinth & Top Molding */}
+      <Box position={[0, 0.04, 0]} args={[2.32, 0.08, 2.32]} color="#703f1d" metalness={0.75} roughness={0.30} />
+      <Box position={[0, 1.33, 0]} args={[2.32, 0.06, 2.32]} color="#703f1d" metalness={0.75} roughness={0.30} />
+
+      {/* 4 Horns on the corners (4 Sừng bàn thờ bằng đồng) */}
+      {[
+        [-1.05, 1.45, -1.05],
+        [1.05, 1.45, -1.05],
+        [-1.05, 1.45, 1.05],
+        [1.05, 1.45, 1.05],
+      ].map((p, i) => (
+        <Horn key={i} position={p} material={bronze} />
+      ))}
+
+      {/* Inner Hearth with Burning Charcoal Embers beneath the grating */}
+      <mesh position={[0, 1.22, 0]}>
+        <boxGeometry args={[1.74, 0.18, 1.74]} />
+        <meshStandardMaterial color="#1a0c06" roughness={0.9} />
       </mesh>
-      {[-1.18, 1.18].map((x) => (
-        <mesh key={x} position={[x, 0.55, 0]} rotation={[Math.PI / 2, 0, 0]} castShadow>
-          <cylinderGeometry args={[0.055, 0.055, 3.25, 10]} />
-          <meshStandardMaterial color={bronze} metalness={0.68} roughness={0.34} />
+      <mesh position={[0, 1.28, 0]}>
+        <boxGeometry args={[1.68, 0.04, 1.68]} />
+        <meshStandardMaterial
+          color="#ff4a00"
+          emissive="#d43200"
+          emissiveIntensity={2.8}
+          roughness={0.6}
+        />
+      </mesh>
+      <pointLight position={[0, 1.42, 0]} color="#ff771a" intensity={1.8} distance={6} />
+
+      {/* Bronze Grating Frame (Khung viền mặt lưới bằng đồng) */}
+      <Box position={[0, 1.365, -0.84]} args={[1.76, 0.035, 0.06]} color={bronze} metalness={0.76} roughness={0.28} />
+      <Box position={[0, 1.365, 0.84]} args={[1.76, 0.035, 0.06]} color={bronze} metalness={0.76} roughness={0.28} />
+      <Box position={[-0.84, 1.365, 0]} args={[0.06, 0.035, 1.76]} color={bronze} metalness={0.76} roughness={0.28} />
+      <Box position={[0.84, 1.365, 0]} args={[0.06, 0.035, 1.76]} color={bronze} metalness={0.76} roughness={0.28} />
+
+      {/* Interlaced Bronze Grid Bars (Mặt lưới đan bằng đồng đan ngang và dọc) */}
+      {gridBars.map((pos) => (
+        <group key={`grate-bars-${pos}`}>
+          {/* Longitudinal bars (along Z) */}
+          <mesh position={[pos, 1.365, 0]} rotation={[Math.PI / 2, 0, 0]} castShadow>
+            <cylinderGeometry args={[0.015, 0.015, 1.68, 8]} />
+            <meshStandardMaterial color={bronze} metalness={0.78} roughness={0.28} />
+          </mesh>
+          {/* Transverse bars (along X) */}
+          <mesh position={[0, 1.378, pos]} rotation={[0, 0, Math.PI / 2]} castShadow>
+            <cylinderGeometry args={[0.015, 0.015, 1.68, 8]} />
+            <meshStandardMaterial color={bronze} metalness={0.78} roughness={0.28} />
+          </mesh>
+        </group>
+      ))}
+
+      {/* 4 Cast Bronze Rings (Các khoen bằng đồng) */}
+      {[-1.14, 1.14].flatMap((x) =>
+        [-0.82, 0.82].map((z) => (
+          <mesh key={`altar-ring-${x}-${z}`} position={[x, 0.55, z]} rotation={[0, Math.PI, 0]}>
+            <torusGeometry args={[0.09, 0.024, 10, 20]} />
+            <meshStandardMaterial color={bronze} metalness={0.76} roughness={0.28} />
+          </mesh>
+        ))
+      )}
+
+      {/* 2 Bronze-Overlaid Carrying Poles passing through the rings */}
+      {[-1.14, 1.14].map((x) => (
+        <mesh key={`pole-${x}`} position={[x, 0.55, 0]} rotation={[Math.PI / 2, 0, 0]} castShadow>
+          <cylinderGeometry args={[0.052, 0.052, 3.25, 16]} />
+          <meshStandardMaterial color={bronze} metalness={0.72} roughness={0.32} />
         </mesh>
       ))}
-      {[-1.13, 1.13].flatMap((x) => [-0.85, 0.85].map((z) => (
-        <mesh key={`altar-ring-${x}-${z}`} position={[x, 0.55, z]} rotation={[0, Math.PI, 0]}>
-          <torusGeometry args={[0.09, 0.025, 8, 18]} />
-          <meshStandardMaterial color={bronze} metalness={0.72} roughness={0.3} />
-        </mesh>
-      )))}
     </group>
   )
 }
@@ -476,10 +535,99 @@ function Lampstand() {
 }
 
 function IncenseAltar() {
+  const rings = useMemo(() => [
+    [-0.235, 0.82, -0.12],
+    [-0.235, 0.82, 0.12],
+    [0.235, 0.82, -0.12],
+    [0.235, 0.82, 0.12],
+  ], [])
+
   return (
     <group position={[0, 0, VEIL_Z + 1.25]}>
-      <Box position={[0, 0.45, 0]} args={[0.45, 0.9, 0.45]} color={gold} metalness={0.78} roughness={0.2} />
-      {[[-0.18, 1.0, -0.18], [0.18, 1.0, -0.18], [-0.18, 1.0, 0.18], [0.18, 1.0, 0.18]].map((p, i) => <Horn key={i} position={p} material={gold} />)}
+      {/* Stepped base / plinth */}
+      <mesh position={[0, 0.04, 0]} castShadow receiveShadow>
+        <boxGeometry args={[0.54, 0.08, 0.54]} />
+        <meshStandardMaterial color={goldPure} metalness={0.92} roughness={0.18} />
+      </mesh>
+      <mesh position={[0, 0.09, 0]} castShadow receiveShadow>
+        <boxGeometry args={[0.49, 0.04, 0.49]} />
+        <meshStandardMaterial color={goldPure} metalness={0.92} roughness={0.18} />
+      </mesh>
+
+      {/* Main Altar Body (Acacia wood overlaid with pure gold) */}
+      <mesh position={[0, 0.50, 0]} castShadow receiveShadow>
+        <boxGeometry args={[0.45, 0.78, 0.45]} />
+        <meshStandardMaterial color={goldPure} metalness={0.92} roughness={0.18} />
+      </mesh>
+
+      {/* Decorative recessed side panels */}
+      {[
+        { pos: [0, 0.50, 0.228], rot: [0, 0, 0] },
+        { pos: [0, 0.50, -0.228], rot: [0, 0, 0] },
+        { pos: [0.228, 0.50, 0], rot: [0, Math.PI / 2, 0] },
+        { pos: [-0.228, 0.50, 0], rot: [0, Math.PI / 2, 0] },
+      ].map((panel, idx) => (
+        <mesh key={idx} position={panel.pos} rotation={panel.rot}>
+          <planeGeometry args={[0.34, 0.64]} />
+          <meshStandardMaterial color={goldWarm} metalness={0.94} roughness={0.24} />
+        </mesh>
+      ))}
+
+      {/* Top rim / Crown molding (vành vàng xung quanh bàn thờ xông hương) */}
+      <mesh position={[0, 0.90, 0]} castShadow>
+        <boxGeometry args={[0.50, 0.04, 0.50]} />
+        <meshStandardMaterial color={goldPure} metalness={0.94} roughness={0.14} />
+      </mesh>
+      <mesh position={[0, 0.925, 0]} castShadow>
+        <boxGeometry args={[0.47, 0.02, 0.47]} />
+        <meshStandardMaterial color={goldPure} metalness={0.94} roughness={0.14} />
+      </mesh>
+
+      {/* 4 Golden Horns at the four corners */}
+      {[
+        [-0.20, 1.05, -0.20],
+        [0.20, 1.05, -0.20],
+        [-0.20, 1.05, 0.20],
+        [0.20, 1.05, 0.20],
+      ].map((p, i) => (
+        <Horn key={i} position={p} material={goldPure} />
+      ))}
+
+      {/* 4 Cast Gold Rings under the crown molding on the sides */}
+      {rings.map((pos, i) => (
+        <mesh key={i} position={pos} rotation={[0, 0, Math.PI / 2]} castShadow>
+          <torusGeometry args={[0.035, 0.01, 10, 20]} />
+          <meshStandardMaterial color={goldPure} metalness={0.95} roughness={0.12} />
+        </mesh>
+      ))}
+
+      {/* 2 Gold-overlaid Carrying Poles passed through rings */}
+      <mesh position={[-0.235, 0.82, 0]} rotation={[Math.PI / 2, 0, 0]} castShadow>
+        <cylinderGeometry args={[0.018, 0.018, 0.78, 14]} />
+        <meshStandardMaterial color={goldPure} metalness={0.92} roughness={0.16} />
+      </mesh>
+      <mesh position={[0.235, 0.82, 0]} rotation={[Math.PI / 2, 0, 0]} castShadow>
+        <cylinderGeometry args={[0.018, 0.018, 0.78, 14]} />
+        <meshStandardMaterial color={goldPure} metalness={0.92} roughness={0.16} />
+      </mesh>
+
+      {/* Incense Censer Pan on top */}
+      <mesh position={[0, 0.94, 0]} castShadow>
+        <cylinderGeometry args={[0.16, 0.13, 0.03, 20]} />
+        <meshStandardMaterial color={goldPure} metalness={0.92} roughness={0.16} />
+      </mesh>
+
+      {/* Glowing sacred incense coals / burning sweet incense */}
+      <mesh position={[0, 0.96, 0]}>
+        <cylinderGeometry args={[0.13, 0.13, 0.018, 16]} />
+        <meshStandardMaterial
+          color="#ff7a22"
+          emissive="#ff4500"
+          emissiveIntensity={2.5}
+          roughness={0.4}
+        />
+      </mesh>
+      <pointLight position={[0, 1.05, 0]} color="#ffa344" intensity={1.2} distance={4} />
     </group>
   )
 }
